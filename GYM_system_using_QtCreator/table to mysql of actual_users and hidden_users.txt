@@ -1,0 +1,25 @@
+CREATE TABLE actual_users
+(
+  Name              VARCHAR(150),
+  Surname           VARCHAR(150),
+  Thirdname         VARCHAR(150),
+  Id                INT unsigned,
+  Address           VARCHAR(150),
+  Instagram_account VARCHAR(150),
+  Phone_number      VARCHAR(150),
+  Remain_lessons    INT unsigned,
+  Miss		  INT unsigned
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE hidden_users
+(
+  Name              VARCHAR(150),
+  Surname           VARCHAR(150),
+  Thirdname         VARCHAR(150),
+  Id                INT unsigned,
+  Address           VARCHAR(150),
+  Instagram_account VARCHAR(150),
+  Phone_number      VARCHAR(150),
+  Remain_lessons    INT unsigned,
+  Miss		  INT unsigned
+) DEFAULT CHARSET=utf8;
