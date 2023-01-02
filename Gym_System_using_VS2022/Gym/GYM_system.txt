@@ -1,0 +1,380 @@
+﻿#include "GYM_system.h"
+#include <iostream>
+#include <vector>
+#include <iomanip>
+#include <sstream>
+
+int id_verification(int number, std::vector<Abonement>& actual_users, std::vector<Abonement>& hidden_users, int high_range)
+{
+	bool check = false;
+	int count;
+	std::vector<Abonement> temp;
+	for (int i = 0; i < actual_users.size(); i++) { temp.push_back(actual_users[i]); }
+	for (int i = 0; i < hidden_users.size(); i++) { temp.push_back(hidden_users[i]); }
+	while ((!check) && number < (high_range))
+	{
+		for (int i = 1; i < temp.size(); i++)
+		{
+			count = 0;
+			while (number == temp[i - 1].id()) {
+				check = true;
+				std::cin.ignore();
+				std::cout << "Please, enter another id\n";
+				std::cin >> number;
+				count++;
+			}
+			if (count == 0) { check = true; }
+		}	
+	}
+	return number;
+}
+
+int check_in(int number, int low_range, int high_range)
+{
+	while ((number < low_range) || (number > high_range))
+	{
+		std::cin.clear();
+		std::cout << "try again\n";
+		std::cin >> number;
+	}
+
+	return number;
+}
+
+Gym_system::Gym_system(std::string HOST, std::string USER, std::string PASSWORD, std::string DATABASE)
+{
+	db_conn = mysql_init(NULL);
+	if (!db_conn) { std::cout << "Initialization of MYSQL* handler was failed\n"; }
+	else { std::cout << "Initialization of MYSQL* handler was success\n"; }
+	db_conn = mysql_real_connect(db_conn, HOST.c_str(), USER.c_str(), PASSWORD.c_str(), DATABASE.c_str(), 0, NULL, 0);
+	if (!db_conn) { std::cout << "Connection error\n"; }
+	else { std::cout << "Connection success!!!\n"; }	
+}
+
+void Gym_system::GY_main_menu()
+{
+	std::vector<Abonement>::iterator it;
+	std::vector<Abonement> hidden_users;
+	std::vector<Abonement> actual_users;
+	int checki = 1;
+	int checkin;
+
+	GY_admin_check(); // user verification
+
+	for (int i = 1; i <= GYM_user_amount; i++)
+	{
+		actual_users.push_back(Abonement());
+	}
+
+	GY_print(actual_users);
+
+	while (checki)
+	{
+		std::cout << "Hello. Please, choose action which: " << std::endl;
+		std::cout << "1. All came. 2. Let's start a training. 3. Miss 4. Add lessons to member 5. Add member"
+			<< " 6. Print MEMBERS 7.Exit" << std::endl;
+
+		std::cin >> checkin;
+		int choice = check_in(checkin, 1, 7);
+		int j = 1;
+		if (choice == 1) // all came to our lesson
+		{
+			for (int i = 0; i < actual_users.size(); i++)
+			{
+				int check = actual_users[i].AB_check(); // checking of our members to remain lessons
+
+				if (check == 1) {
+					actual_users[i].remain_num(8);
+					actual_users[i].Visit();
+				} // member doesn't have remain lessons, but he add money to his card
+				else if (check == 2)
+				{
+					it = actual_users.begin() + i;
+					hidden_users.push_back(actual_users[i]);
+					i--;
+					actual_users.erase(it);
+					//hidden_users.push_back(actual_users.pop_back());
+				} // member doesn't have remain lessons and he doesn't add money to his card, 
+				  //and we don't have new member to add
+				else if (check == 3) // member doesn't have remain lessons and we will add new member
+				{
+					it = actual_users.begin() + i; // hide previous user 
+					hidden_users.push_back(actual_users[i]);
+					actual_users.erase(it);
+					i--;
+					int id;
+					std::string name, surname, third_name, address, instagram_account, phone_number;
+					std::cout << "Please enter name of new member: ";
+					std::cin >> name;
+					std::cout << "\nSurname: ";
+					std::cin >> surname;
+					std::cout << "\nThirdname: ";
+					std::cin >> third_name;
+					std::cout << "Please, enter id of a new member in a range between (" << GYM_user_amount
+						<< "; 1000]: " << std::endl;
+					std::cin >> checkin;
+					id = id_verification(checkin, actual_users, hidden_users, 1000);
+					std::cout << "\nAddress: ";
+					std::cin >> address;
+					std::cout << "\nInstagram account: ";
+					std::cin >> instagram_account;
+					std::cout << "\nPhone number: ";
+					std::cin >> phone_number;
+					//actual_users.insert(actual_users.begin(), Abonement(id, name, surname, third_name, address, instagram_account, phone_number));
+					actual_users.push_back(Abonement(id, name, surname, third_name, address, instagram_account, phone_number));
+					//actual_users[i].Visit();
+				}
+
+				if (check == 2 || check == 3 || check == 1) { ; }
+				else { actual_users[i].Visit(); }
+
+				for (int i = 0; i < actual_users.size(); i++) // that people that mark like a miss, wouldn't be miss lesson
+					// twice in two lesson in a row
+				{
+					actual_users[i].unmiss();
+				}
+			}
+			GY_print(actual_users);
+		}
+		else if (choice == 2) // let's start our lesson
+		{
+			for (int i = 1; i <= actual_users.size(); i++)
+			{
+				if (actual_users[i - 1].miss_check() == 1) { actual_users[i - 1].Visit(); }
+				else { ; }
+			}
+			for (int i = 1; i <= actual_users.size(); i++)
+			{
+				actual_users[i - 1].unmiss();
+			}
+			GY_print(actual_users);
+		}
+		else if (choice == 3) // miss
+		{
+			int id_miss;
+			GY_print(actual_users);
+			std::cout << "\nPlease, choose a member which will miss our lesson.\n"
+				<< "To make this type A NUMBER of that user\n";
+			std::cin >> id_miss;
+			if (actual_users.size() == 0) { std::cout << "We don't have member to start our lesson\n"; }
+			{
+				while ((id_miss < 1) && (id_miss > actual_users.size())) // some stuff with ??????? may be more clear
+				{
+					std::cout << "You make a mistake, please try again\n";
+					std::cin.clear();
+					std::cin >> id_miss;
+				}
+				actual_users[id_miss - 1].Miss();
+				std::cout << "\nMember " << actual_users[id_miss - 1].name() << " "
+					<< actual_users[id_miss - 1].surname() << " "
+					<< actual_users[id_miss - 1].thirdname() << " with id "
+					<< actual_users[id_miss - 1].id() << " will be miss\n" << std::endl;
+			}
+		}
+		else if (choice == 4) // add new lessons to our members
+		{
+			int choice;
+			std::vector<Abonement>::iterator it_hidden;
+			std::cout << "That user locate in our actual table, or that user visited our lessons many days ago?\n"
+				<< "Type 1, if in ACTUAL TABLE, or ELSE many days ago\n";
+			std::cin >> choice;
+
+			if (choice == 1) // actual table
+			{
+				int id_add_lessons;
+				if (actual_users.size() == 0) { std::cout << "We don't have members from ACTUAL TABLE to add new lessons to them\n"; }
+				else {
+					GY_print(actual_users);
+					std::cout << "\nPlease, choose a member which will wanna to add lesson.\n"
+						<< "To make this type A NUMBER of that user\n";
+					std::cin >> id_add_lessons;
+					while ((id_add_lessons < 1) && (id_add_lessons > actual_users.size())) // some stuff with ??????? may be more clear
+					{
+						std::cout << "You make a mistake, please try again\n";
+						std::cin.clear();
+						std::cin >> id_add_lessons;
+					}
+					if (actual_users[id_add_lessons - 1].remaining_lessons() < 3)
+					{
+						actual_users[id_add_lessons - 1].remain_num(8);
+
+						std::cout << "\n The new number of remain lessons of member " << actual_users[id_add_lessons - 1].name() << " "
+							<< actual_users[id_add_lessons - 1].surname() << " "
+							<< actual_users[id_add_lessons - 1].thirdname() << " with id "
+							<< actual_users[id_add_lessons - 1].id() << " will be " << actual_users[id_add_lessons - 1].remaining_lessons()
+							<< " lessons\n" << std::endl;
+					}
+					else { std::cerr << "Mistake. User have more than 3 remain lessons, because you can not add to them new lessons\n"; }
+				}
+			}
+			else // hidden table
+			{
+				int id_add_lessons;
+				if (actual_users.size() == 6)
+				{
+					std::cout << "Sorry, ACTUAL LESSON is full of members!!!\n";
+				}
+				else {
+					if (hidden_users.size() == 0) { std::cout << "We don't have members from HIDDEN TABLE to add new lessons to them\n"; }
+					else {
+						GY_print(hidden_users);
+						std::cout << "\nPlease, choose a member which will wanna to add lesson.\n"
+							<< "To make this type A NUMBER of that user\n";
+						std::cin >> id_add_lessons;
+						while ((id_add_lessons < 1) && (id_add_lessons > hidden_users.size())) // some stuff with ??????? may be more clear
+						{
+							std::cout << "You make a mistake, please try again\n";
+							std::cin.clear();
+							std::cin >> id_add_lessons;
+						}
+						if (hidden_users[id_add_lessons - 1].remaining_lessons() < 3)
+						{
+							hidden_users[id_add_lessons - 1].remain_num(8);
+							std::cout << "\n The new number of remain lessons of member " << hidden_users[id_add_lessons - 1].name() << " "
+								<< hidden_users[id_add_lessons - 1].surname() << " "
+								<< hidden_users[id_add_lessons - 1].thirdname() << " with id "
+								<< hidden_users[id_add_lessons - 1].id() << " will be " << hidden_users[id_add_lessons - 1].remaining_lessons()
+								<< " lessons\n" << std::endl;
+							it_hidden = hidden_users.begin() + id_add_lessons - 1;
+							actual_users.push_back(hidden_users[id_add_lessons - 1]);
+							hidden_users.erase(it_hidden);
+						}
+						else { std::cerr << "Mistake. User have more than 3 remain lessons, because you can not add to them new lessons\n"; }
+					}
+				}
+			}
+		}
+		else if (choice == 5) // add members
+		{
+			if (actual_users.size() < 6)
+			{
+				int id;
+				std::string name, surname, third_name, address, instagram_account, phone_number;
+				std::cout << "Please enter name of new member: ";
+				std::cin >> name;
+				std::cout << "\nSurname: ";
+				std::cin >> surname;
+				std::cout << "\nThirdname: ";
+				std::cin >> third_name;
+				std::cout << "Please, enter id of a new member in a range between (" << GYM_user_amount
+					<< "; 1000]: " << std::endl;
+				std::cin >> checkin;
+				id = id_verification(checkin, actual_users, hidden_users, 1000);
+				std::cout << "\nAddress: ";
+				std::cin >> address;
+				std::cout << "\nInstagram account: ";
+				std::cin >> instagram_account;
+				std::cout << "\nPhone number: ";
+				std::cin >> phone_number;
+				actual_users.push_back(Abonement(id, name, surname, third_name, address, instagram_account, phone_number));
+			}
+			else if (actual_users.size() == 6)
+			{
+				std::cout << "Sorry. Our class is full, you can not add new member\n";
+			}
+		}
+		else if (choice == 6) // print table
+		{
+			GY_print(actual_users);
+		}
+		else if (choice == 7)
+		{
+			exit(0);
+		}
+	}
+
+
+}
+
+void Gym_system::GY_admin_check()
+{
+	std::vector <std::string> logins = { "gleb", "admin", "couch" };
+	std::vector <std::string> passwords = { "iamgleb", "iamadmin", "iamcouch" };
+	std::string login;
+	std::string password;
+	bool admin_check = false;
+
+	while (!admin_check)
+	{
+		std::cout << "Please, enter login: \n";
+		std::cin >> login;
+		for (int i = 0; i < logins.size(); i++)
+		{
+			if(login == logins[i])
+			{
+				std::cin.clear();
+				std::cout << "Please, enter password: \n";
+				std::cin >> password;
+				if (password == passwords[i]) { admin_check = true; }
+			}
+		}
+		if (!admin_check) { std::cout << "\nUncorrect input. Try again.\n\n"; }
+	}
+}
+
+
+void Gym_system::GY_print(std::vector<Abonement>& users)
+{
+	if (users.size() < 1) { std::cout << "\nSorry, but we can't start our lesson, because there are not members..\n\n"; }
+	else {
+		std::cout << "+--------------------------------------------------------------------------------------------------------------------------------------------------------------+\n";
+		std::cout << "|                                                                                                                                                              |\n";
+		std::cout << "|--Number-----Name-------Surname-------Thirdname--------Id---------------------Address-----------------Instagram account------Phone number--Remaining lessons--|\n";
+		std::cout << "|                                                                                                                                                              |\n";
+		std::cout << "+--------------------------------------------------------------------------------------------------------------------------------------------------------------+\n";\
+		std::cout << "|                                                                                                                                                              |\n";
+		for (int i = 0; i < users.size(); i++)
+		{
+			std::cout << "|----" << i + 1 << std::setw(12) << std::setfill('-') << users[i].name()
+				<< std::setw(15) << std::setfill('-') << users[i].surname() << std::setw(15) << std::setfill('-')
+				<< users[i].thirdname() << std::setw(10) << std::setfill('-') << users[i].id() << std::setw(40)
+				<< std::setfill('-') << users[i].address() << std::setw(20) << std::setfill('-')
+				<< users[i].instagram_account() << std::setw(20) << std::setfill('-')
+				<< users[i].phone_number() << std::setw(10) << std::setfill('-') << users[i].remaining_lessons()
+				<< std::setw(13) << std::setfill('-') << "------|\n";
+		std::cout << "|                                                                                                                                                              |\n";
+		}
+		std::cout << "+--------------------------------------------------------------------------------------------------------------------------------------------------------------+\n";
+	}
+}
+
+void Gym_system::GY_create_account(Abonement* account)
+{
+	std::stringstream sql;
+	int num = 2;
+	mysql_set_character_set(db_conn, "utf8");
+	sql << "INSERT INTO client VALUES('1','hleb','nikitin','вар','5','minsk,prospekt pobeditilit','svytoydavid','+3754451232','8');";
+	/*sql << "INSERT INTO clients VALUES ('2','" << (account->name()).c_str()
+		<< "','" << (account->surname()).c_str() << "','" << (account->thirdname()).c_str()
+		<< "','" << account->id() << "','"
+		<< (account->address()).c_str() << "','" << (account->instagram_account()).c_str() << "','"
+		<< (account->phone_number()).c_str() << "','" << account->remaining_lessons() << "');";*/
+	std::cout << sql.str().c_str() << "..sdg";
+	if (!mysql_query(db_conn, (sql.str().c_str()))) {
+		std::cout << "USER adding ended successfully!!!"
+			<< std::endl;
+	}
+	else { std::cout << "USER adding ended unsuccessfully(((" << std::endl; }
+}
+
+/*
+
+Gym_system::Gym_system(std::string HOST, std::string USER, std::string PASSWORD, std::string DATABASE)
+{
+	db_conn = mysql_init(NULL);
+	if (db_conn == NULL) { std::cout << "Initialization of MYSQL* handler was failed\n"; }
+	else { std::cout << "Initialization of MYSQL* handler was success\n"; }
+	db_conn = mysql_real_connect(db_conn, HOST.c_str(), USER.c_str(), PASSWORD.c_str(), DATABASE.c_str(), 0, NULL, 0);
+	if (!db_conn) { std::cout << "Connection error\n"; }
+	else { std::cout << "Connection success!!!\n"; 
+}
+
+Gym_system::Create_account()
+{
+
+}
+
+
+
+
+*/
