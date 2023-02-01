@@ -1,0 +1,41 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.42</VERSION>
+ <DEVICE>ATmega328P</DEVICE>
+ <WORKING_DIR>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:\Programs\Creativity\AVRStudio4\AvrAssembler2\Appnotes</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:\Programs\Creativity\AVRStudio4\AvrAssembler2\Appnotes\m328pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.map</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <init><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>9</LINE></init>
+  <div8u><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>15</LINE></div8u>
+  <d8u_1><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>23</LINE></d8u_1>
+  <d8u_2><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>25</LINE></d8u_2>
+  <d8u_3><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>36</LINE></d8u_3>
+  <d8u_4><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>38</LINE></d8u_4>
+  <d8u_5><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>45</LINE></d8u_5>
+  <d8u_6><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>47</LINE></d8u_6>
+  <d8u_7><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>54</LINE></d8u_7>
+  <d8u_8><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>56</LINE></d8u_8>
+  <d8u_9><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>63</LINE></d8u_9>
+  <d8u_10><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>65</LINE></d8u_10>
+  <d8u_11><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>72</LINE></d8u_11>
+  <d8u_12><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>74</LINE></d8u_12>
+  <d8u_13><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>81</LINE></d8u_13>
+  <d8u_14><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>83</LINE></d8u_14>
+  <d8u_15><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>90</LINE></d8u_15>
+  <d8u_16><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba1_1_4\laba1_1_4.asm</FILE><LINE>92</LINE></d8u_16>
+ </LABELS>
+</ASSEMBLER_INFO>

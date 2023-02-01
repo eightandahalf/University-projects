@@ -1,0 +1,93 @@
+.include "m328pdef.inc"
+
+// .def	dres8u	=r16		;result
+.def	dd8u	=r15		;dividend
+.def	dv8u	=r16		;divisor
+.def	drem8u	=r17		;remainder
+
+;***** Code
+init:
+	ldi r20,0x45
+	mov dd8u,r20
+	ldi dv8u,0x40
+	sts 0x0345,r15
+	sts 0x0346,r17
+div8u:	sub	drem8u,drem8u;clear remainder and carry
+	rol	dd8u		;shift left dividend ; 					$0100 0101 -> 1000 1010/ C = 0
+	rol	drem8u		;shift dividend into remainder; 		$0 -> 0 
+	sub	drem8u,dv8u	;remainder = remainder - divisor; 		$rem = 0 - 2
+	brcc d8u_1		;if result negative						$
+	add	drem8u,dv8u	;restore remainder; 					$rem = 0
+	clc				;clear carry to be shifted into result; $C = 0
+	rjmp	d8u_2	;else
+d8u_1:	sec			;set carry to be shifted into result
+
+d8u_2:	rol	dd8u	;shift left dividend;					$1000 1010 -> 0001 0100/ C = 1
+	rol	drem8u		;shift highest bit of dividend into lowest bit of remainder.
+				    ;$rol(00) = 01; carry flag C = 0.
+					;We put the carry flag after rol of (dividend) in the remainder.
+					;Carry flag in this case a kind of bridge between the highest bit of 
+					;dividend number and the lowest bit ofremainder
+	sub	drem8u,dv8u	;remainder = remainder - divisor		$rem = 1 - 2 < 0
+	brcc	d8u_3	;if result negative						$
+	add	drem8u,dv8u	;restore remainder  			 		$rem = 1	
+	clc				;clear carry to be shifted into result  $C = 0
+	rjmp	d8u_4	;else
+d8u_3:	sec			;set carry to be shifted into result
+
+d8u_4:	rol	dd8u	;shift left dividend					$0001 0100 -> 0010 1000/ C = 0
+	rol	drem8u		;shift dividend into remainder			$rol(01) = 10 = 0x02
+	sub	drem8u,dv8u	;remainder = remainder - divisor		$rem = 2 - 2 = 0
+	brcc	d8u_5	;if result negative						$
+	add	drem8u,dv8u	;restore remainder
+	clc				;clear carry to be shifted into result
+	rjmp	d8u_6	;else
+d8u_5:	sec			;set carry to be shifted into result	$C = 1
+
+d8u_6:	rol	dd8u	;shift left dividend					$0010 1000 -> 0101 0001/ C = 0
+	rol	drem8u		;shift dividend into remainder			$rol(00) = 0 = 0x00; we put the carry flag in the remainder
+	sub	drem8u,dv8u	;remainder = remainder - divisor		$rem = 0 - 2 < 0
+	brcc	d8u_7	;if result negative						$
+	add	drem8u,dv8u	;restore remainder  			 		$rem = 0
+	clc				;clear carry to be shifted into result  $C = 0
+	rjmp	d8u_8	;else
+d8u_7:	sec			;set carry to be shifted into result
+
+d8u_8:	rol	dd8u	;shift left dividend					$0101 0001 -> 1010 0010/ C = 0
+	rol	drem8u		;shift dividend into remainder			$rol(00) = 0 = 0x00
+	sub	drem8u,dv8u	;remainder = remainder - divisor		$rem = 0 - 2 < 0
+	brcc	d8u_9	;if result negative						$
+	add	drem8u,dv8u	;restore remainder 			     		$rem = 0
+	clc				;clear carry to be shifted into result  $C = 0
+	rjmp	d8u_10	;else
+d8u_9:	sec			;set carry to be shifted into result
+
+d8u_10:	rol	dd8u	;shift left dividend					$1010 0010 -> 0100 0100/ C = 1
+	rol	drem8u		;shift dividend into remainder			$rol(00) = 01 = 0x01
+	sub	drem8u,dv8u	;remainder = remainder - divisor		$rem = 1 - 2 < 0
+	brcc	d8u_11	;if result negative						$
+	add	drem8u,dv8u	;restore remainder 			     		$rem = 1
+	clc				;clear carry to be shifted into result  $C = 0
+	rjmp	d8u_12	;else
+d8u_11:	sec			;set carry to be shifted into result
+
+d8u_12:	rol	dd8u	;shift left dividend					$0100 0100 -> 1000 1000/ C = 0
+	rol	drem8u		;shift dividend into remainder			$rol(01) = 10 = 0x02
+	sub	drem8u,dv8u	;remainder = remainder - divisor		$rem = 2 - 2 = 0
+	brcc	d8u_13	;if result negative						$
+	add	drem8u,dv8u	;restore remainder 			     	
+	clc				;clear carry to be shifted into result   
+	rjmp	d8u_14	;else
+d8u_13:	sec			;set carry to be shifted into result   	$C = 1
+
+d8u_14:	rol	dd8u	;shift left dividend					$1000 1000 -> 0001 0001/ C = 1
+	rol	drem8u		;shift dividend into remainder			$rol(00) = 01 = 0x01
+	sub	drem8u,dv8u	;remainder = remainder - divisor		$rem = 1 - 2 < 0
+	brcc	d8u_15	;if result negative						$
+	add	drem8u,dv8u	;restore remainder 			     		$rem = 1
+	clc				;clear carry to be shifted into result  $C = 0
+	rjmp	d8u_16	;else
+d8u_15:	sec			;set carry to be shifted into result
+
+d8u_16:	rol	dd8u	;shift left dividend					$0001 0001 -> 0010 0010/ C = 0
+	ret

@@ -1,0 +1,31 @@
+init:
+      ldi r17, 0x08
+      lds r18, 0x0287       
+	  ldi r19, 0x0F		      
+	  mov r5, r18
+      ldi r25, 0x01
+
+m0:
+      mov r16, r5
+      rol r16		           
+      mov r5, r16
+      mov r16, r21
+      rol r16		                 
+      sub r16, r19	                            
+      brcc m1		// carry flag. now equal to 1(c = 1)                          
+      add r16, r19	                     
+m1:
+      mov r21, r16
+      in r26,SREG   
+      andi r26, 0x01 	// login and operator
+      eor r26,r25		                   
+      out SREG,r26		
+      mov r16, r20	
+      rol r16		           
+      mov r20, r16		                    
+	  sts 0x0386, r16                 
+	  sts 0x0387, r21                  
+      dec r17		         
+      brne m0		           
+end:  rjmp end
+     

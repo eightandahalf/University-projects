@@ -1,0 +1,57 @@
+.include "m328pdef.inc"
+
+// Registers
+
+.def r_lsb = R0  ; lsb 16-bit-number to be divided
+.def r_msb = R1  ; msb 16-bit-number to be divided
+.def r_temp = R2 ; temp register
+.def r_divider = R3  ; 8-bit-number to divide with
+.def r_lsb_result = R4  ; lsb result
+.def r_msb_result = r5  ; msb result
+.def r_mp = r16 ; multipurpose register for loading
+
+		rjmp start
+start:
+	ldi r_mp,0xAA
+	mov r_msb,r_mp
+	mov r_lsb,r_mp
+	ldi r_mp,0x55
+	mov r_divider,r_mp
+;
+; Divide r_msb:r_lsb by r_divider
+; 		    AA:AA    by   0x55
+;
+div8:
+	clr r_temp
+	clr r_msb_result
+	clr r_lsb_result
+	inc r_lsb_result
+;
+; Here the division loop starts
+;
+div8a:
+	clc
+	rol r_lsb
+	rol r_msb
+	rol r_temp
+	brcs div8b // Checks the carry flag (C) and makes the transition if that bit is set.
+	cp r_temp,r_divider // Compares the contents of two general-purpose registers by 
+						// subtracting the contents of the Rr register from the contents 
+						// of the Rd register. This command affects only the flags of the 
+						// SREG status register, which are set according to the result of 
+						// the subtraction. The contents of the registers are not changed. 
+						// Typically this command is used in conjunction with one of the 
+						// conditional transition commands
+	brcs div8c
+div8b:
+	sub r_temp,r_divider // Subtracts the contents of the Rr register from the Rd register. The result is placed in the Rd register.
+	sec   ; set carry-bit, result is a 1
+	rjmp div8d
+div8c:
+	clc   ; clear carry-bit, resulting bit is a 0
+div8d:
+	rol r_lsb_result
+	rol r_msb_result
+	brcc div8a // Checks the carry flag (C) and makes the jump if this bit is cleared
+stop:
+	rjmp stop

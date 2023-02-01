@@ -1,0 +1,23 @@
+.include "m328pdef.inc"
+      ldi r20,9
+      clr r2
+	  ldi r24,0x10
+	  mov r0,r24
+	  ldi r24,0x02
+	  mov r4,r24
+loop: rol r0 // Shifts the contents of the Rd register 
+			 // to the left by one digit. Bit b0 is loaded 
+			 // into flag C of the SREG register, and bit 
+			 // b7 is loaded into flag C.
+      dec r20
+      breq end // This command checks the zero (Z) flag and jumps to the label if it is set
+      rol r2
+      sub r2,r4 // r2 = r2 - r4
+      brcc skip // The carry flag bit (C) of the status register is tested and if the bit is
+	  			// cleared, the transition is made relative to the program counter state
+      add r2,r4 // r2 = r2 + r4
+      clc // set C flat to 0
+      rjmp loop
+skip: sec // set C flag to 1
+      rjmp loop
+end:  rjmp end   ;????????? ?????????

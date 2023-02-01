@@ -1,0 +1,25 @@
+.include "m328pdef.inc"
+
+.def	remainder	=r15	;remainder
+.def	dividend	=r16	;dividend
+.def	divisor		=r17	;divisor
+.def	loop_counter=r18	;loop_counter
+
+;***** Code
+
+div8u:	sub	remainder,remainder ;clear remainder and carry
+		ldi	loop_counter,9		;init loop counter
+d8u_1:	rol	dividend			;shift left dividend
+		dec	loop_counter		;decrement counter
+		brne d8u_2				;if done
+		ret						;    return
+d8u_2:	rol	remainder			;shift dividend into remainder
+		sub	remainder,divisor	;remainder = remainder - divisor
+		brcc d8u_3				;if result negative
+		add	remainder,divisor	;    restore remainder
+		clc						;    clear carry to be shifted into result
+		rjmp d8u_1				;else
+d8u_3:	sec						;    set carry to be shifted into result
+		rjmp d8u_1
+
+

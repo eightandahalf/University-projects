@@ -1,0 +1,35 @@
+.def	rem				=r15		;remainder
+.def	dividend		=r12		;dividend
+.def	divisor			=r17		;divisor
+.def	loop_counter	=r18		;loop_counter
+
+;***** Code
+div8u:	
+	sts 0x0345,dividend 	//saving result into address 0x0345
+	sts 0x0346,rem 			//saving remainder result into address 0x0346
+	sub	rem,rem				;clear remainder and carry
+	ldi	loop_counter,9		;init loop counter
+	ldi r20,0x45
+	mov dividend,r20
+	lds divisor,0x0245
+div_1:	
+	rol	dividend			;shift left dividend
+	dec	loop_counter		;decrement counter
+	brne div_2			 
+	// The zero flag bit (Z) of the status register is 
+	// tested and if the bit is cleared, the transition 
+	// is made relative to the program counter state
+	ret						;return
+div_2:
+	rol	rem					;shift dividend into remainder
+	sub	rem,divisor			;remainder = remainder - divisor
+	brcc div_3				;if result negative
+	// The carry flag bit (C) of the status register 
+	// is tested and if the bit is cleared, the transition 
+	// is made relative to the program counter state
+	add	rem,divisor			;restore remainder
+	clc						;clear carry to be shifted into result
+	rjmp	div_1			;else
+div_3:
+	sec						;set carry to be shifted into result
+	rjmp	div_1
