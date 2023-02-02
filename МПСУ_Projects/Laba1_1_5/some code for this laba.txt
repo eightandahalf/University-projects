@@ -1,0 +1,20 @@
+  LDI R16,0x66 ; for adding 0x66 to the result
+    LDI R17,0x66 ; for later subtracting from the result
+    ADD R2,R3 ; add the two two-digit-BCDs
+    BRCC NoCy1 ; jump if no byte overflow occurs
+    INC R1 ; increment the next higher byte
+    ANDI R17,0x0F ; don't subtract 6 from the higher nibble
+NoCy1:
+    BRHC NoHc1 ; jump if no half-carry occured
+    ANDI R17,0xF0 ; don't subtract 6 from lower nibble
+NoHc1:
+    ADD R2,R16 ; add 0x66 to result
+    BRCC NoCy2 ; jump if no carry occured
+    INC R1 ; increment the next higher byte
+    ANDI R17,0x0F ; don't subtract 6 from higher nibble
+NoCy2:
+    BRHC NoHc2 ; jump if no half-carry occured
+    ANDI R17,0xF0 ; don't subtract 6 from lower nibble
+NoHc2:
+    SUB R2,R17 ; subtract correction
+

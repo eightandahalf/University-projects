@@ -1,0 +1,37 @@
+.include "m328pdef.inc"
+.def temp =r18
+.def r_six =r19
+.def r_sixty   =r20
+summa:
+	ldi r16,0x25
+	ldi r17,0x40
+	mov temp,r17
+
+	ldi r28,0b01100110    // 66
+	ldi r_six,0b00000110  // 06
+	ldi r_sixty,0b01100000// 60
+	neg r_six   // Invert
+	neg r_sixty // Invert
+	add r16,r28
+	add r16,temp
+	brhc correcth // Checks the half carry flag (H) and 
+	// makes the jump if this bit is cleared
+	brcc correctc // Checks the carry flag (C) and makes 
+	// the jump if this bit is cleared
+	adc r2,r3
+end: rjmp end
+	
+correcth:
+	adc r2,r3
+	add r16,r_six
+	cpse r2,r3 // Compares the contents of the two RONs 
+	// r2 and r3 and skips the next command if the 
+	// registers have the same values.
+	rjmp end   // rjmp if r2 != r3
+	clc 
+	rjmp correctc
+correctc:
+	add r2,r3
+	add r16,r_sixty
+	rjmp end
+ 

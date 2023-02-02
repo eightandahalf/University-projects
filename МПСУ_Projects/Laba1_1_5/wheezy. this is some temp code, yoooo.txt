@@ -1,0 +1,79 @@
+.include "m328pdef.inc"
+.def six =r16
+.def sixty =r17
+.def sixtysix =r18
+.def first_operand =r19
+.def second_operand =r20
+.def one =r21
+.def seventy =r22
+.def msb_res =r23
+.def lsb_res =r24
+init:
+	mov lsb_res,first_operand
+	sts 0x0345,msb_res
+	sts 0x0346,lsb_res
+	ldi msb_res,0x00
+	ldi six,0x06
+	ldi sixty,0x60
+	ldi sixtysix,0x66
+	ldi first_operand,0x49 // result
+	ldi second_operand,0x49
+	ldi one,0x01
+	ldi seventy,0x70
+main:
+	add first_operand,second_operand
+	brhc H_equal_to_0_way // Checks the half-port flag (H) and performs a jump if this bit is reset
+	// if we here that it means that H = 1
+	brcc H_and_C_equal_to_0_way // Checks the migration flag (C) and performs a jump if this bit is reset
+	// if we here that it means that H = 1 and C = 1
+	inc msb_res
+	add first_operand,sixtysix // .........FIRST ADD OF 0X66...........
+	brhc h_eq_to_0
+	// if we here that it means that after adding 0x66 to our number H = 1
+	brcc c_eq_to_0_h_eq_to_1
+	// if we here that it means that after adding 0x66 to our number H = 1 and C = 1
+	h_eq_to_0:
+	brcc c_and_h_equal_to_zero
+	// if we here that it means that after adding 0x66 to our number H = 0 and C = 1
+	sub first_operand,sixtysix
+	rjmp init
+
+	///////////////////////c_and_h_equal_to_zero_after_sum_with_0x66////////////////////////////////////
+	c_and_h_equal_to_zero:
+	// if we here that it means that after adding 0x66 to our number H = 0 and C = 0
+	add first_operand,sixtysix // .........SECOND ADD OF 0X66...........
+	brhc h_flag
+	brcc c_flag
+	// C = 1, H = 1
+	rjmp init
+
+	h_flag:
+	brcc c_and_h_flag_eq_to_0
+	// h = 0, c = 1
+	sub first_operand,six
+	rjmp init
+
+	c_flag:
+	// h = 1, c = 0
+	sub first_operand,seventy
+	rjmp init
+
+	c_and_h_flag_eq_to_0:
+	sub first_operand,sixtysix
+	rjmp init
+	///////////////////////////////////////////////////////////////////////
+
+
+	///////////////////////c_eq_to_0_h_eq_to_1_after_sum_with_0x66////////////////////////////////////
+	c_eq_to_0_h_eq_to_1:
+
+	///////////////////////////////////////////////////////////////////////
+H_equal_to_0_way:
+	brcc H_equal_to_0_and_C_to_1_way // Checks the migration flag (C) and performs a jump if this bit is reset
+	// if we here that it means that H = 0 and C = 1
+
+H_equal_to_0_and_C_to_1_way:
+	// if we here that it means that H = 0 and C = 0
+	
+H_and_C_equal_to_0_way:
+	// if we here that it meand that H = 1 and C = 0

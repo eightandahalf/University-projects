@@ -1,0 +1,40 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.42</VERSION>
+ <DEVICE>ATmega328P</DEVICE>
+ <WORKING_DIR>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:\Programs\Creativity\AVRStudio4\AvrAssembler2\Appnotes</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:\Programs\Creativity\AVRStudio4\AvrAssembler2\Appnotes\m328pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.map</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <init><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>9</LINE></init>
+  <main><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>19</LINE></main>
+  <H_equal_to_0_way><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>55</LINE></H_equal_to_0_way>
+  <H_eq_to1_and_C_equal_to0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>88</LINE></H_eq_to1_and_C_equal_to0>
+  <firstway_h_eq_to0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>41</LINE></firstway_h_eq_to0>
+  <firstway_h_eq_to_1_c_to_0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>50</LINE></firstway_h_eq_to_1_c_to_0>
+  <firstway_h_and_c_eq_to0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>47</LINE></firstway_h_and_c_eq_to0>
+  <H_and_C_equal_to_0_way><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>116</LINE></H_and_C_equal_to_0_way>
+  <secondway_h_eq_to0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>74</LINE></secondway_h_eq_to0>
+  <secondway_h_eq_to_1_c_to_0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>84</LINE></secondway_h_eq_to_1_c_to_0>
+  <secondway_h_and_c_eq_to0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>80</LINE></secondway_h_and_c_eq_to0>
+  <thirdway_h_eq_to0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>102</LINE></thirdway_h_eq_to0>
+  <thirdway_h_eq_to_1_c_to_0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>111</LINE></thirdway_h_eq_to_1_c_to_0>
+  <thirdway_h_and_c_eq_to0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>107</LINE></thirdway_h_and_c_eq_to0>
+  <fourthway_h_eq_to0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>129</LINE></fourthway_h_eq_to0>
+  <fourthway_h_eq_to_1_c_to_0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>139</LINE></fourthway_h_eq_to_1_c_to_0>
+  <fourthway_h_and_c_eq_to0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba1_1_5\Laba1_1_5.asm</FILE><LINE>135</LINE></fourthway_h_and_c_eq_to0>
+ </LABELS>
+</ASSEMBLER_INFO>
