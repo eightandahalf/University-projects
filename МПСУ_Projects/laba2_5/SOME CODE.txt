@@ -1,0 +1,35 @@
+.include "m2560def.inc"
+
+.def multiplicand_m =r16
+.def multiplicand_l =r17
+.def multiplier_m =r18
+.def multiplier_l =r19
+.def temp0	=r20
+.def temp1	=r21
+.def temp2	=r22
+.def temp3 	=r23
+.def counter =r24
+	ldi multiplicand_m,0x00
+	ldi multiplicand_l,0x02
+	ldi multiplier_m,0x00
+	ldi multiplier_l,0x0B
+
+main:
+	clr temp3
+	clr temp2
+	ldi counter,16
+	lsr multiplier_m
+	ror multiplier_l
+m16:
+	brcc noad8
+	add temp2,multiplicand_l
+	adc temp3,multiplicand_m
+noad8:
+	ror temp3
+	ror temp2
+	ror temp1
+	ror temp0
+	dec counter
+	ret
+	brne m16
+ret

@@ -1,0 +1,29 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.42</VERSION>
+ <DEVICE>ATmega2560</DEVICE>
+ <WORKING_DIR>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_3</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:\Programs\Creativity\AVRStudio4\AvrAssembler2\Appnotes</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_3\laba2_3.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:\Programs\Creativity\AVRStudio4\AvrAssembler2\Appnotes\m2560def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_3\laba2_3.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_3\laba2_3.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_3\laba2_3.map</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <init><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_3\laba2_3.asm</FILE><LINE>8</LINE></init>
+  <main><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_3\laba2_3.asm</FILE><LINE>13</LINE></main>
+  <fist_op_eq_1><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_3\laba2_3.asm</FILE><LINE>50</LINE></fist_op_eq_1>
+  <fist_op_eq_0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_3\laba2_3.asm</FILE><LINE>29</LINE></fist_op_eq_0>
+  <result_operation><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_3\laba2_3.asm</FILE><LINE>71</LINE></result_operation>
+  <result_zero><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_3\laba2_3.asm</FILE><LINE>77</LINE></result_zero>
+ </LABELS>
+</ASSEMBLER_INFO>

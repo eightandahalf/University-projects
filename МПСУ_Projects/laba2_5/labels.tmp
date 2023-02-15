@@ -1,0 +1,25 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.42</VERSION>
+ <DEVICE>ATmega2560</DEVICE>
+ <WORKING_DIR>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_5</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:\Programs\Creativity\AVRStudio4\AvrAssembler2\Appnotes</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_5\laba2_5.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:\Programs\Creativity\AVRStudio4\AvrAssembler2\Appnotes\m2560def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_5\laba2_5.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_5\laba2_5.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_5\laba2_5.map</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <main><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_5\laba2_5.asm</FILE><LINE>16</LINE></main>
+  <result_saving><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_5\laba2_5.asm</FILE><LINE>24</LINE></result_saving>
+ </LABELS>
+</ASSEMBLER_INFO>

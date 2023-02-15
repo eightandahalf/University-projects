@@ -1,0 +1,2 @@
+@ECHO OFF
+"D:\Programs\Creativity\AVRStudio4\AvrAssembler2\avrasm2.exe" -S "E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_5_diving\labels.tmp" -fI -W+ie -C V2E -o "E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_5_diving\laba2_5_diving.hex" -d "E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_5_diving\laba2_5_diving.obj" -e "E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_5_diving\laba2_5_diving.eep" -m "E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_5_diving\laba2_5_diving.map" "E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_5_diving\laba2_5_diving.asm"
