@@ -1,0 +1,27 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.42</VERSION>
+ <DEVICE>ATmega328P</DEVICE>
+ <WORKING_DIR>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_4_correct</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:\Programs\Creativity\AVRStudio4\AvrAssembler2\Appnotes</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_4_correct\laba2_4_correct.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:\Programs\Creativity\AVRStudio4\AvrAssembler2\Appnotes\m328pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_4_correct\laba2_4_correct.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_4_correct\laba2_4_correct.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_4_correct\laba2_4_correct.map</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <main><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_4_correct\laba2_4_correct.asm</FILE><LINE>5</LINE></main>
+  <array><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_4_correct\laba2_4_correct.asm</FILE><LINE>23</LINE></array>
+  <sum_cycle><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_4_correct\laba2_4_correct.asm</FILE><LINE>12</LINE></sum_cycle>
+  <not_result_increment><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\laba2_4_correct\laba2_4_correct.asm</FILE><LINE>16</LINE></not_result_increment>
+ </LABELS>
+</ASSEMBLER_INFO>
