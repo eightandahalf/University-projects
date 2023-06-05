@@ -1,0 +1,42 @@
+.include "m328pdef.inc"
+
+init: ldi R16,Low(RAMEND) // The stack has a pointer that points to the top of the stack.
+						  //
+						  // The stack pointer is the responsibility of a special register SP, or rather it is the register pair SPL and SPH.
+						  //
+						  // When starting the controller, usually the first thing is to initialize the stack, 
+						  // writing to the SP the address of its bottom, where it will grow. It's usually the end of RAM, 
+						  // but it's growing by the beginning.
+						  //
+					      // Where RAMEND is the macro definition indicating the end of RAM in the current MK.
+						  //
+						  // since stack working of theory of FIFO, and we watching on stack from down to the top, and
+						  // new items adds 
+      out SPL,R16 
+      ldi R16,High(RAMEND)
+      out SPH, R16
+      clr R16
+      out DDRC, R16    
+      rcall LCD_Init   
+      ldi R21, $30     
+      bclr 6            
+
+main: sbis PINC, 3     
+      ldi R21, $30     
+      sbic PINC, 5     
+      rjmp off         
+      brbs 6, nozero   
+      inc R21
+nozero:bset 6          
+      rjmp end         
+off:  bclr 6           
+end:  cpi R21, $3A     
+      brne indic       
+      dec R21
+indic:sts 0x0200, R21
+      ldi R17,0x01     
+      rcall LCD_Update 
+      rjmp main        
+
+.include "hd44780.asm" 
+                      

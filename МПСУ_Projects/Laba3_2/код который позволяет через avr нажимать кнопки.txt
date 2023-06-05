@@ -1,0 +1,52 @@
+.include "m328pdef.inc"
+
+init: ldi R16,Low(RAMEND);обязательная инициализация стека
+      out SPL,R16
+      ldi R16,High(RAMEND)
+      out SPH, R16
+      clr R16
+      out DDRC, R16    ;PortC  на ввод
+      rcall LCD_Init   ;инициализация ЖКИ
+      ldi R21, $30     ;символ "0"
+      bclr 6           ;разрешить увеличение счёта b6SREG=0
+	  
+	  ;ldi r22, $FF
+	  ;sts 0x0026, r22 // now ALL bits of pinc will be set
+
+
+main: ;ldi r22, $00
+	  ;sts 0x0026, r22 // now ALL bits of pinc will be set
+
+	  sbis PINC, 3     ;skip next line if 3-st bit of PINC is 1
+      ldi R21, $30
+	       
+	  ;ldi r22, $FF
+	  ;sts 0x0026, r22 // now ALL bits of pinc will be set
+      
+	  sbic PINC, 5     ;skip next line if 5-st bit of PINC is 0
+      rjmp end          
+	  brts end 		   ;jump if T flag is set
+      inc R21
+	  bset 6
+end:  cpi R21, $3A     ;$3A contains next symbol after last numeric symbol
+					   ;i.e., 0011 1001 = "9", and 0011 1010 = ":"
+      brne indic       ;flag Z check and jump if that flag is not set
+      dec R21
+indic:sts 0x0200, R21
+      ldi R17,0x01     ;количество символов, выводимых на ЖКИ
+      rcall LCD_Update ;вывод на ЖКИ области ОЗУ с адреса [$0200]
+      rjmp main        ;организация бесконечного цикла
+
+.include "hd44780.asm" ;библиотека работы с ЖКИ. Обязательно
+                       ;подключение в конце программы
+
+;Выводы DB7…DB0 это шина данных/адреса.
+;E — стробирующий вход. Дрыгом напряжения на этой линии мы даем
+;понять дисплею что нужно забирать/отдавать данные с/на шину 
+;данных.
+;RW — определяет в каком направлении у нас движутся данные. Если 
+;1 — то на чтение из дисплея, если 0 то на запись в дисплей.
+;RS — определяет что у нас передается, команда (RS=0) или данные 
+;(RS=1). Данные будут записаны в память по текущему адресу, а 
+;команда исполнена контроллером.
+

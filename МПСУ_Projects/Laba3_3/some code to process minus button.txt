@@ -1,0 +1,16 @@
+cpi ones,0b00010000
+	brpl num_of_ones_more_than_one  ; jump if N flag is not set, and it meand that
+									; num of ones more than 0
+	cln
+	cpi tens,0b00000001
+	brmi counter_eq_to_0            ; jump if N flag is set, and it means that	
+						  		    ; num of tens equal to zero and num of ones eq to 0
+	subi tens,0b00000001
+	add ones,nine
+	dec counter
+	rjmp ret1
+counter_eq_to_0:
+	rjmp ret1
+num_of_ones_more_than_one:
+	sub ones,R16
+	dec counter

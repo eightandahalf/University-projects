@@ -1,0 +1,33 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.42</VERSION>
+ <DEVICE>ATmega328P</DEVICE>
+ <WORKING_DIR>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:\Programs\Creativity\AVRStudio4\AvrAssembler2\Appnotes</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:\Programs\Creativity\AVRStudio4\AvrAssembler2\Appnotes\m328pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.map</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <RESET><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.asm</FILE><LINE>118</LINE></RESET>
+  <Ext_INT0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.asm</FILE><LINE>82</LINE></Ext_INT0>
+  <Ext_INT1><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.asm</FILE><LINE>97</LINE></Ext_INT1>
+  <limit_not_reached><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.asm</FILE><LINE>90</LINE></limit_not_reached>
+  <ret0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.asm</FILE><LINE>95</LINE></ret0>
+  <num_of_ones_more_than_one><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.asm</FILE><LINE>114</LINE></num_of_ones_more_than_one>
+  <counter_eq_to_0><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.asm</FILE><LINE>109</LINE></counter_eq_to_0>
+  <ret1><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.asm</FILE><LINE>116</LINE></ret1>
+  <main><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.asm</FILE><LINE>137</LINE></main>
+  <clear><FILE>E:\BSUIR\Some subjects\МПСУ\МПСУ_Projects\Laba3_3\Laba3_3.asm</FILE><LINE>146</LINE></clear>
+ </LABELS>
+</ASSEMBLER_INFO>

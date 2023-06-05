@@ -1,0 +1,118 @@
+.include "m328pdef.inc"
+.def tens = r21
+.def ones = r22
+.def prev_state = r25
+.def new_state = r16
+.def counter = r17
+
+init:
+	ldi r16,Low(RAMEND)
+	out SPL,r16
+	ldi r16,High(RAMEND)
+	out SPH,r16
+	ldi r16,0b11110000
+	out DDRD, r16
+	rcall LCD_Init
+	ldi ones,0x30 	; first symbol on display
+	ldi tens,0x30	; second symbol on disply
+	ldi prev_state,0x00	; previous state
+	ldi counter,0x00
+main:
+	sbis PINB,3
+	ldi ones,0x30
+	sbis PINB,3
+	ldi tens,0x30
+	in new_state,PIND
+	andi new_state,0b00001100
+switch:
+	cpi prev_state,0b00001000
+	breq state_2
+	
+	cpi prev_state,0b00000100
+	breq state_1
+
+	cpi prev_state,0b00000000
+	breq state_0
+
+	cpi prev_state,0b00001100
+	breq state_3
+
+state_2:
+	cpi new_state,0b00001100
+	breq plus
+	cpi new_state,0b00000000
+	breq minus
+	rjmp indic
+
+state_1:
+	cpi new_state,0b00001100
+	breq minus
+	cpi new_state,0b00000000
+	breq plus
+	rjmp indic
+
+state_0:
+	cpi new_state,0b00001000
+	breq plus
+	cpi new_state,0b00000100
+	breq minus
+	rjmp indic
+
+state_3:
+	cpi new_state,0b00001000
+	breq minus
+	cpi new_state,0b00000100
+	breq plus
+	rjmp indic
+
+plus:
+	inc ones ; 0x30 + 1 = 0x31
+	inc counter
+	cpi counter,45
+	breq limit_reached
+	cpi ones,0x3A
+	breq ones_overflow
+	rjmp indic
+
+ones_overflow:
+	subi ones,0x0A
+	inc tens
+	rjmp indic
+	
+limit_reached:
+	dec ones
+	dec counter
+	rjmp indic
+
+minus:
+	dec ones ; 0x30 - 1 = 0x2F
+	cpi ones,0x2F ; 0x2F - 0x2F = 0
+	breq ones_eq_to_0 ; jump if z flag is set
+	dec counter
+	rjmp indic
+
+ones_eq_to_0:
+	dec tens ; 0x30 - 1 = 0x2F
+	cpi tens,0x2F ; 0x2F - 0x2F = 0
+	breq zero_counter ; jump if z flag is set
+	ldi ones,0b00111001 ; 9
+	dec counter
+	rjmp indic
+
+zero_counter:
+	clr counter
+	clr ones
+	clr tens
+	rjmp indic
+
+indic:
+	sts 0x0200,tens
+	sts 0x0201,ones
+	ldi r17,0x02
+	rcall LCD_Update
+	mov prev_state,new_state
+	rjmp main
+
+	
+
+.include "hd44780.asm"                            

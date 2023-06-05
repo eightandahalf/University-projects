@@ -1,0 +1,54 @@
+minus:
+	dec ones ; 0x30 - 1 = 0x2F
+	cpi ones,0x2F ; 0x2F - 0x2F = 0
+	breq ones_eq_to_0 ; jump if z flag is set
+	rjmp indic
+
+ones_eq_to_0:
+	cpi tens,0x30 ; 0x30 - 0x30 = 0
+	breq zero_counter ; jump if z flag is set
+	dec tens
+	ldi ones,0b00111001 ; 9
+	rjmp indic
+
+zero_counter:
+	inc ones
+	rjmp indic
+
+
+#2
+
+minus:
+	dec ones
+	cpi tens,0x30
+	breq zero_tens
+	cpi ones,0x2F	
+	breq ones_eq_to_zero
+	rjmp indic
+ones_eq_to_zero:
+	dec tens
+	ldi ones,0b00111001
+	rjmp indic
+zero_tens:
+	cpi ones,0x2F
+	breq zero_counter
+	rjmp indic
+zero_counter:
+	inc ones
+	rjmp indic
+#3
+minus:
+	dec ones
+	cpi tens,0x30
+	breq zero_tens
+	cpi ones,0x2F	
+	brne indic
+	dec tens
+	ldi ones,0x39
+zero_tens:
+	cpi ones,0x2F
+	breq zero_counter
+	rjmp indic
+zero_counter:
+	inc ones
+	rjmp indic

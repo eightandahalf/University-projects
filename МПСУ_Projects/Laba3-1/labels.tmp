@@ -1,0 +1,27 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.42</VERSION>
+ <DEVICE>ATmega328P</DEVICE>
+ <WORKING_DIR>E:\BSUIR\MPSU_Projects\Laba3-1</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:\Programs\Creativity\AVRStudio\AvrAssembler2\Appnotes</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>E:\BSUIR\MPSU_Projects\Laba3-1\TestLaba3-1.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:\Programs\Creativity\AVRStudio\AvrAssembler2\Appnotes\m328pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>E:\BSUIR\MPSU_Projects\Laba3-1\TestLaba3-1.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>E:\BSUIR\MPSU_Projects\Laba3-1\TestLaba3-1.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>E:\BSUIR\MPSU_Projects\Laba3-1\TestLaba3-1.map</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <init><FILE>E:\BSUIR\MPSU_Projects\Laba3-1\TestLaba3-1.asm</FILE><LINE>8</LINE></init>
+  <main><FILE>E:\BSUIR\MPSU_Projects\Laba3-1\TestLaba3-1.asm</FILE><LINE>15</LINE></main>
+  <getting_right_word_to_compare><FILE>E:\BSUIR\MPSU_Projects\Laba3-1\TestLaba3-1.asm</FILE><LINE>18</LINE></getting_right_word_to_compare>
+  <diode_switch><FILE>E:\BSUIR\MPSU_Projects\Laba3-1\TestLaba3-1.asm</FILE><LINE>27</LINE></diode_switch>
+ </LABELS>
+</ASSEMBLER_INFO>

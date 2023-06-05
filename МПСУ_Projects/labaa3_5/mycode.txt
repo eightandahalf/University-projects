@@ -1,0 +1,88 @@
+.include "m328pdef.inc"
+
+.def ones 		=r21
+.def tens 		=r22
+.def hundreads 	=r23
+.def init_data 	=r24
+.def thirty		=r25
+init:
+	ldi r16,Low(RAMEND)
+	out SPL,r16
+	ldi r16,High(RAMEND)
+	out SPH,r16
+	CLR r16
+	out DDRC,r16
+	rcall LCD_Init
+    
+; REGIST ADCSRA - STATUS AND CONTROL REGISTER ADC
+;Ð‘Ð¸Ñ‚ 7 - ADEN: ADC Enable â€“ "1" / "0" â€“ Ð²ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ/Ð²Ñ‹ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ ÑÑ…ÐµÐ¼Ñ‹ Ð¦ÐÐŸ.
+;Ð‘Ð¸Ñ‚ 6 â€“ ADSC: ADC Start Conversion â€“ "1" â€“ Ð—Ð°Ð¿ÑƒÑÐº Ð°Ð½Ð°Ð»Ð¾Ð³Ð¾Ð²Ð¾-Ñ†Ð¸Ñ„Ñ€Ð¾Ð²Ð¾Ð³Ð¾ Ð¿Ñ€ÐµÐ¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ñ.
+;Ð‘Ð¸Ñ‚ 5 â€“ ADATE: ADC Auto Trigger Enable â€“ ÐÐ²Ñ‚Ð¾Ð·Ð°Ð¿ÑƒÑÐº Ð¿Ñ€ÐµÐ¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ñ Ð¿Ð¾ Ð²Ð½ÐµÑˆÐ½Ð¸Ð¼ ÑÐ¸Ð³Ð½Ð°Ð»Ð°Ð¼.
+;Ð‘Ð¸Ñ‚ 4 â€“ ADIF: ADC Interrupt Flag â€“ "1" â€“ ÐŸÑ€ÐµÐ¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð·Ð°Ð²ÐµÑ€ÑˆÐ¸Ð»Ð¾ÑÑŒ. Ð ÐµÐ³Ð¸ÑÑ‚Ñ€Ñ‹ Ð´Ð°Ð½Ð½Ñ‹Ñ… ADCH:ADCL Ð¾Ð±Ð½Ð¾Ð²Ð¸Ð»Ð¸ÑÑŒ.
+;Ð‘Ð¸Ñ‚ 3 â€“ ADIE: ADC Interrupt Enable â€“ Ð Ð°Ð·Ñ€ÐµÑˆÐµÐ½Ð¸Ðµ Ð¿Ñ€ÐµÑ€Ñ‹Ð²Ð°Ð½Ð¸Ñ Ð¿Ð¾ Ñ„Ð»Ð°Ð³Ñƒ ADIF.
+;Ð‘Ð¸Ñ‚Ñ‹ 2:0 â€“ ADPS2:0: ADC Prescaler Select Bits â€“ ÐšÐ¾ÑÑ„Ñ„Ð¸Ñ†Ð¸ÐµÐ½Ñ‚ Ð´ÐµÐ»ÐµÐ½Ð¸Ñ Ñ‡Ð°ÑÑ‚Ð¾Ñ‚Ñ‹ Ð¼ÐµÐ¶Ð´Ñƒ XTAL Ð¸ Ñ‚Ð°ÐºÑ‚Ð¾Ð²Ñ‹Ð¼ Ð²Ñ…Ð¾Ð´Ð¾Ð¼ ÐÐ¦ÐŸ.
+;           7    6     5     4     3     2     1     0
+;ADCSRA = ADEN ADSC  ADATE ADIF  ADIE  ADPS2 ADPS1 ADPS0
+      ldi r16,0b10000111  ;Ñ€Ð°Ð·Ñ€ÐµÑˆÐ¸Ñ‚ÑŒ ÐÐ¦ÐŸ-Ð¿Ñ€ÐµÑ€Ñ‹Ð²Ð°Ð½Ð¸Ðµ Ð¸ CLK/128
+      sts ADCSRA,r16      ;ÑÑ‚Ð°Ñ€Ñ‚ Ð¿Ñ€ÐµÐ¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ñ
+;ADPS2 ADPS1 ADPS0 = 111 = 	CLK/64; CLK - Ñ‚Ð°ÐºÑ‚Ð¾Ð²Ð°Ñ Ñ‡Ð°ÑÑ‚Ð¾Ñ‚Ð° ÐœÐš
+
+;          7     6     5     4     3     2     1     0
+;ADMUX = REFS1 REFS0 ADLAR  MUX4  MUX3  MUX2  MUX1  MUX0
+      ldi r16,0b00000000  ;Ð¾Ð¿Ð¾Ñ€Ð½Ð¾Ðµ - Ð½Ð°Ð¿Ñ€ÑÐ¶ÐµÐ½Ð¸Ðµ Ð¿Ð¸Ñ‚Ð°Ð½Ð¸Ñ,
+      sts ADMUX,r16       ;Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚ Ð²Ñ‹Ñ€Ð°Ð²Ð½Ð¸Ð²Ð°ÐµÑ‚ÑÑ to the left,
+                          ;0-Ð¹ ÐºÐ°Ð½Ð°Ð» ÐÐ¦ÐŸ
+;Ð ÐµÐ³Ð¸ÑÑ‚Ñ€ ADMUX ÑƒÐ¿Ñ€Ð°Ð²Ð»ÑÐµÑ‚ Ð²Ñ‹Ð±Ð¾Ñ€Ð¾Ð¼ ÐºÐ°Ð½Ð°Ð»Ð° ÐÐ¦ÐŸ, Ð¸ÑÑ‚Ð¾Ñ‡Ð½Ð¸ÐºÐ° Ð¾Ð¿Ð¾Ñ€Ð½Ð¾Ð³Ð¾ Ð½Ð°Ð¿Ñ€ÑÐ¶ÐµÐ½Ð¸Ñ Ð¸ ÑÐ¿Ð¾ÑÐ¾Ð±Ð¾Ð¼ Ð²Ñ‹Ñ€Ð°Ð²Ð½Ð¸Ð²Ð°Ð½Ð¸Ñ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚Ð°.
+;REFS1 REFS0 = 0	0 - Ð’Ð½ÐµÑˆÐ½Ð¸Ð¹ Ð²Ñ‹Ð²Ð¾Ð´ AREF
+;Ð‘Ð¸Ñ‚ 5 - ADLAR: ADC Left Adjust Result â€“ Ð²Ñ‹Ñ€Ð°Ð²Ð½Ð¸Ð²Ð°Ð½Ð¸Ðµ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚Ð° Ð²Ð»ÐµÐ²Ð¾ Ð¸Ð»Ð¸ Ð²Ð¿Ñ€Ð°Ð²Ð¾; ADLAR = 0 - Ð²Ñ‹Ñ€Ð°Ð²Ð½Ð¸Ð²Ð°Ð½Ð¸Ðµ Ð²Ð»ÐµÐ²Ð¾
+;Ð‘Ð¸Ñ‚Ñ‹ 4:0 - MUX4:0: Analog Channel and Gain Selection Bits â€“ Ð²Ñ‹Ð±Ð¾Ñ€ Ð°Ð½Ð°Ð»Ð¾Ð³Ð¾Ð²Ð¾Ð³Ð¾ Ð²Ñ…Ð¾Ð´Ð°, Ð¿Ð¾Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð½Ð¾Ð³Ð¾ ÐºÐ¾ Ð²Ñ…Ð¾Ð´Ñƒ ÐÐ¦ÐŸ ÑÐ¾Ð³Ð»Ð°ÑÐ½Ð¾ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñ‹
+	
+READ_ADC:
+      lds r16,ADCSRA
+      ori r16,0b01000000 ; ori Rd, K - Â«Ð›Ð¾Ð³Ð¸Ñ‡ÐµÑÐºÐ¾Ðµ Ð˜Ð›Ð˜Â» Ð ÐžÐ Ð¸ ÐºÐ¾Ð½ÑÑ‚Ð°Ð½Ñ‚Ñ‹
+      sts ADCSRA,R16      ;Ð·Ð°Ð¿ÑƒÑÐº Ð¿Ñ€ÐµÐ¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ñ
+KEEP_POLING:	  ;ÑÐ¸Ð´Ð¸Ð¼ Ð·Ð´ÐµÑÑŒ Ð² Ð¾Ð¶Ð¸Ð´Ð°Ð½Ð¸Ð¸ ÐºÐ¾Ð½Ñ†Ð° Ð¿Ñ€ÐµÐ¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ñ
+      lds r16,ADCSRA
+      mov r18,r16
+      andi r18,0b00010000 ; andi Rd, K - Â«Ð›Ð¾Ð³Ð¸Ñ‡ÐµÑÐºÐ¾Ðµ Ð˜Â» Ð ÐžÐ Ð¸ ÐºÐ¾Ð½ÑÑ‚Ð°Ð½Ñ‚Ñ‹
+      cpi r18,0b00010000  ;Ð¿Ñ€ÐµÐ¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð·Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ð¾?
+      brne KEEP_POLING ; jump if z flag not set
+
+      lds r17, ADCSRA
+      ldi r20, 0b00001000
+      eor r17,r20 		  ; Â«Ð˜ÑÐºÐ»ÑŽÑ‡Ð°ÑŽÑ‰ÐµÐµ Ð˜Ð›Ð˜Â» - ÑƒÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° ÐµÐ´Ð¸Ð½Ð¸Ñ†Ñ‹ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð¿Ñ€Ð¸ ÑÑ€Ð°Ð²Ð½ÐµÐ½Ð¸Ð¸ Ñ€Ð°Ð·Ð½Ñ‹Ñ… Ð²ÐµÐ»Ð¸Ñ‡Ð¸Ð½
+      sts ADCSRA,r17      ;Ð¿Ð¸ÑˆÐµÐ¼ 1 Ð´Ð»Ñ Ð¾Ñ‡Ð¸ÑÑ‚ÐºÐ¸ Ñ„Ð»Ð°Ð³Ð° ADIF
+
+convert_bin_to_dec:  
+    lds init_data,ADCH    ;Ð·Ð°ÐºÐ°Ð½Ñ‡Ð¸Ð²Ð°ÐµÐ¼ Ñ‡Ð¸Ñ‚Ð°Ñ‚ÑŒ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚ Ð² ADCH Ð¿Ð¾ÑÐ»Ðµ ADCL
+	ldi ones,0x30
+	ldi tens,0x30
+	ldi hundreads,0x30
+	ldi thirty,0x30
+main:
+	subi init_data,10
+	brcs return_data_to_memory
+	inc tens
+	cpi tens,0x3A
+	brcc plus_hundread
+	clc
+	rjmp main
+return_data_to_memory:
+	subi init_data,-10
+	mov ones,init_data
+	add ones,thirty
+	rjmp indic
+plus_hundread:
+	inc hundreads
+	subi tens,0x0A
+	rjmp main
+	
+indic:
+	sts 0x0200,tens
+	sts 0x0201,ones
+	ldi r17,2
+	rcall LCD_Update
+	rjmp main
+	
+
+.include "hd44780.asm"                            

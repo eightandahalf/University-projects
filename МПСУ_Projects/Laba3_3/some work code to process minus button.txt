@@ -1,0 +1,17 @@
+Ext_INT1:                 ; Обработчик прерывания по входу INT1
+	sub ones,R16
+	cpi ones,0xF0
+	brne num_of_ones_more_than_one ; jump if Z = 0
+	cpi tens,0x01
+	brmi counter_eq_to_zero	       ; jump if N = 1
+	subi tens,0x01
+	ldi ones,0b10010000
+	dec counter
+	rjmp ret1
+num_of_ones_more_than_one:
+	dec counter
+	rjmp ret1
+counter_eq_to_zero:
+	clr ones
+	clr tens
+ret1: reti                ; Выход из обработчика прерывания

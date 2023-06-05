@@ -1,0 +1,18 @@
+main:
+	subi init_data,10
+	brcs return_data_to_memory
+	inc tens
+	cpi tens,0x3A
+	brcc plus_hundread
+	clc
+	rjmp main
+return_data_to_memory:
+	subi init_data,-10
+	mov ones,init_data
+	add ones,thirty
+	rjmp indic
+plus_hundread:
+	inc hundreads
+	subi tens,0x0A
+	rjmp main
+		
